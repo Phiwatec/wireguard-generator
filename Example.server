@@ -1,0 +1,5 @@
+ipv4_range=10.1.0. #Example. Clients are 10.1.0.XXX
+ipv6_range=2001:db8:: # Example. Clients are 2001:db8::XXXX 
+endpoint=<endpoint ip or fqdn>:<endpoint port>
+server_pubkey=<pubkey of server>
+dns=<DNS Server>

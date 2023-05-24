@@ -1,0 +1,25 @@
+#!/bin/bash
+CONFFILE=$1.server
+
+
+if [ ! -f "$CONFFILE" ]; then
+    echo "Configfile for Server" $1 "does not exist!!"
+    exit
+fi
+source $CONFFILE
+OUTFILE=$2.$1.conf
+privkey=$(wg genkey)
+pubkey=$(echo $privkey | wg pubkey )
+echo Key to add:  $pubkey
+echo IPs to add: $ipv4_range$3/32,$ipv6_range$3/128
+echo "[Interface]" > $OUTFILE
+echo  Address = $ipv4_range$3/32,$ipv6_range$3/128  >> $OUTFILE
+echo  PrivateKey = $privkey >> $OUTFILE
+echo DNS = $dns >> $OUTFILE
+echo "[Peer]" >> $OUTFILE
+echo PublicKey = $server_pubkey >> $OUTFILE
+echo Endpoint = $endpoint >> $OUTFILE
+echo "AllowedIPs = 0.0.0.0/0, ::/0" >> $OUTFILE
+qrencode -t UTF8 < $OUTFILE
+
+
